@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/lblLimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:text="@string/lblListMax"
+        android:layout_marginLeft="@dimen/setting_margin"
+        android:textAppearance="@style/editStyle" />
+
+    <RadioGroup
+        android:id="@+id/groupLimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="@dimen/setting_margin"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/radio05"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/lbl05" />
+
+        <RadioButton
+            android:id="@+id/radio10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl10" />
+
+        <RadioButton
+            android:id="@+id/radio15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl15" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/lblBefore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/lblLimit"
+        android:layout_marginLeft="@dimen/setting_margin"
+        android:layout_marginTop="16dp"
+        android:text="@string/lblBefore"
+        android:textAppearance="@style/editStyle" />
+
+	<RadioGroup
+	    android:id="@+id/groupBefore"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentRight="true"
+	    android:layout_below="@+id/groupLimit"
+	    android:layout_marginTop="16dp"
+        android:layout_marginRight="@dimen/setting_margin"
+	    android:orientation="horizontal" >
+
+	    <RadioButton
+	        android:id="@+id/before10"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:checked="true"
+	        android:text="@string/lbl10"
+	         />
+	
+	    <RadioButton
+	        android:id="@+id/before20"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/lbl20"
+	         />
+	
+	    <RadioButton
+	        android:id="@+id/before30"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/lbl30"
+	         />
+	</RadioGroup>
+	
+</RelativeLayout>

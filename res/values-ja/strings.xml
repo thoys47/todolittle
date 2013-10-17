@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ToDoLittle</string>
+    <string name="action_settings">設定</string>
+    <string name="action_debug">Log参照</string>
+    <string name="title_section1">最近の一覧</string>
+    <string name="title_section2">過去の一覧</string>
+    <string name="lblFutureList">Recent List</string>
+    <string name="lblPastList">Past List</string>
+    <string name="btnAdd">追加</string>
+    <string name="btnUpdate">保存</string>
+    <string name="lblEvent">イベント</string>
+    <string name="lblDate">日付</string>
+    <string name="lblTime">時間</string>
+    <string name="lblTrace">Trace</string>
+    <string name="lblDebug">Log</string>
+    <string name="SQLErr">SQL Error</string>
+    <string name="SQLOK">保存しました</string>
+    <string name="action_add">追加</string>
+    <string name="lblListMax">表示する数</string>
+    <string name="sumListMax">Input number of list</string>
+    <string name="lbl05">5</string>
+    <string name="lbl10">10</string>
+    <string name="lbl15">15</string>
+    <string name="btnDelete">削除</string>
+    <string name="strnone">no</string>
+    <string name="strnone2">no Strings</string>
+    <string name="ReqEvent">イベントは必須です</string>
+    <string name="lblDone">完了した</string>
+    <string name="lblNotify">事前通知する</string>
+    <string name="ReqDate">日付は必須です</string>
+    <string name="btnOK">OK</string>
+    <string name="btnCancel">Cancel</string>
+    <string name="ReqTime">時間は必須です</string>
+    <string name="lblInterval">Check Interval</string>
+    <string name="lblBefore">何分前通知</string>
+    <string name="lbl20">20</string>
+    <string name="lbl30">30</string>
+    <string name="strCamera">Camera</string>
+    <string name="lblAttach">画像ファイル</string>
+    <string name="strMenuPicture">新しい画像</string>
+    <string name="strMenuGallery">画像の選択</string>
+    <string name="strMenuRemove">画像の削除</string>
+    <string name="hintAttach">長押ししてください。</string>
+
+</resources>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/editLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/layout_v_margin"
+    android:layout_marginLeft="@dimen/layout_h_margin"
+    android:layout_marginRight="@dimen/layout_h_margin"
+    android:layout_marginTop="@dimen/layout_v_margin"
+    android:orientation="vertical" >
+
+	<TextView
+	    android:id="@+id/lblEvent"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_alignParentTop="true"
+	    android:text="@string/lblEvent"
+	    android:textAppearance="@style/editStyle" />
+
+    <EditText
+        android:id="@+id/editEvent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/lblEvent"
+        android:layout_marginTop="@dimen/edit_margin"
+        android:inputType="text"
+        android:textAppearance="@style/editStyle" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/lblDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/editEvent"
+        android:layout_marginTop="@dimen/edit_margin"
+        android:text="@string/lblDate"
+        android:textAppearance="@style/editStyle" />
+
+    <EditText
+        android:id="@+id/editDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/lblDate"
+        android:layout_marginTop="@dimen/edit_margin"
+        android:layout_toRightOf="@+id/lblDate"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:inputType="date"
+        android:textAppearance="@style/editStyle" />
+
+    <TextView
+        android:id="@+id/lblTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblDate"
+        android:layout_marginTop="@dimen/edit_margin"
+        android:text="@string/lblTime"
+        android:textAppearance="@style/editStyle" />
+
+    <EditText
+        android:id="@+id/editTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/lblTime"
+        android:layout_toRightOf="@+id/lblTime"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:inputType="time"
+        android:textAppearance="@style/editStyle" />
+    
+    <TextView
+        android:id="@+id/lblEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/lblTime"
+        android:layout_toRightOf="@+id/editTime"
+        android:text="@string/lblEndTime"
+        android:textAppearance="@style/editStyle" />
+
+    <EditText
+        android:id="@+id/editEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/lblTime"
+        android:layout_toRightOf="@+id/lblEndTime"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:inputType="time"
+        android:textAppearance="@style/editStyle" />
+    	
+	<TextView
+	    android:id="@+id/lblAttach"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/lblTime"
+        android:layout_marginTop="@dimen/edit_margin"
+	    android:text="@string/lblAttach"
+	    android:textAppearance="@style/editStyle" />
+
+	<EditText
+	    android:id="@+id/editAttach"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBaseline="@+id/lblAttach"
+	    android:layout_toRightOf="@+id/lblAttach"
+	    android:ems="10"
+	    android:inputType="textUri"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+	    android:hint="@string/hintAttach"
+	    android:textAppearance="@style/editStyle" />
+    
+    <Switch
+        android:id="@+id/switchNotify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/lblAttach"
+        android:layout_marginTop="@dimen/edit_margin"
+        android:text="@string/lblNotify"
+        android:textAppearance="@style/editStyle" />
+    
+    <Switch
+        android:id="@+id/switchDone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/switchNotify"
+        android:layout_marginTop="@dimen/edit_margin"
+        android:text="@string/lblDone"
+        android:textAppearance="@style/editStyle" />
+    
+    <TextView
+        android:id="@+id/lblID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:height="0dp"
+        android:text=""
+        android:width="0dp" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/btnDelete" />
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/btnUpdate" />
+
+</RelativeLayout>

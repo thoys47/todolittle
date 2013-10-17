@@ -1,0 +1,71 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView
+        android:id="@+id/textEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="8dp"
+        android:layout_toLeftOf="@+id/textDate"
+        android:ellipsize="end"
+        android:lines="1"
+        android:text="@string/strnone2"
+        android:textAppearance="@style/listStyle" />
+    
+    <TextView
+        android:id="@+id/textID"
+        android:layout_width="0sp"
+        android:layout_height="0sp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:height="0sp"
+        android:text=""
+        android:width="0sp"
+		android:textAppearance="@style/listSmall" />
+
+    <TextView
+        android:id="@+id/textDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/strnone2"
+        android:layout_marginTop="4dp"
+        android:textAppearance="@style/listSmall" />
+
+    <TextView
+        android:id="@+id/textTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textDate"
+        android:layout_toRightOf="@+id/textEvent"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:text="@string/strnone"
+        android:textAppearance="@style/listSmall" />
+
+    <TextView
+        android:id="@+id/listBar"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textEvent"
+        android:layout_marginTop="8dp"
+        android:textAppearance="@style/baseStyle" />
+
+    <TextView
+        android:id="@+id/textNotify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textDate"
+        android:layout_toRightOf="@+id/textTime"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="2dp"
+        android:text="@string/strnone"
+        android:textAppearance="@style/listSmall" />
+
+</RelativeLayout>

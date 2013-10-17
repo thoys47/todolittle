@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widgetLayout"
+    style="@style/widgetBase"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/widgetBar1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:height="2dp"
+        android:text="" />
+    
+    <TextView
+        android:id="@+id/textEvent1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/widgetBar1"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="0dp"
+        android:ellipsize="end"
+        android:layout_toLeftOf="@+id/textDate1"
+        android:lines="1"
+        android:text="@string/strnone"
+        android:textAppearance="@style/widgetEvent" />
+
+    <TextView
+        android:id="@+id/textDate1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/strnone"
+        android:layout_toLeftOf="@+id/textTime1"
+		android:layout_below="@+id/widgetBar1"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:textAppearance="@style/widgetSmall" />
+
+    <TextView
+        android:id="@+id/textTime1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/strnone"
+        android:layout_alignParentRight="true"
+		android:layout_below="@+id/widgetBar1"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:textAppearance="@style/widgetSmall" />
+    
+    <TextView
+        android:id="@+id/widgetBar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textEvent1"
+        android:height="1dp"
+        android:text="" />
+    
+    <TextView
+        android:id="@+id/textEvent2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/widgetBar2"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="0dp"
+        android:layout_toLeftOf="@+id/textDate2"
+        android:lines="1"
+        android:ellipsize="end"
+        android:text="@string/strnone"
+        android:textAppearance="@style/widgetEvent" />
+    
+    <TextView
+        android:id="@+id/textDate2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/strnone"
+        android:layout_below="@+id/widgetBar2"
+        android:layout_toLeftOf="@+id/textTime2"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:textAppearance="@style/widgetSmall" />
+
+    <TextView
+        android:id="@+id/textTime2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/strnone"
+        android:layout_below="@+id/widgetBar2"
+		android:layout_alignParentRight="true"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:textAppearance="@style/widgetSmall" />
+    
+    <TextView
+        android:id="@+id/widgetBar3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textEvent2"
+        android:layout_marginTop="1dp"
+        android:height="1dp"
+        android:text="" />
+    
+    <TextView
+        android:id="@+id/textEvent3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/widgetBar3"
+        android:layout_toLeftOf="@+id/textDate3"
+        android:layout_marginBottom="1dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="0dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:text="@string/strnone"
+        android:textAppearance="@style/widgetEvent" />
+    
+    <TextView
+        android:id="@+id/textDate3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/strnone"
+        android:layout_below="@+id/widgetBar3"
+        android:layout_toLeftOf="@+id/textTime3"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="1dp"
+        android:textAppearance="@style/widgetSmall" />
+
+    <TextView
+        android:id="@+id/textTime3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/strnone"
+        android:layout_below="@+id/widgetBar3"
+		android:layout_alignParentRight="true"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="1dp"
+        android:textAppearance="@style/widgetSmall" />
+    
+</RelativeLayout>

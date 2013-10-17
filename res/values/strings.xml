@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ToDoLittle</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_debug">View Log</string>
+    <string name="title_section1">Recent</string>
+    <string name="title_section2">Past</string>
+    <string name="lblFutureList">Recent List</string>
+    <string name="lblPastList">Past List</string>
+    <string name="btnAdd">Add</string>
+    <string name="btnUpdate">Save</string>
+    <string name="lblEvent">Event</string>
+    <string name="lblDate">Date</string>
+    <string name="lblTime">Time</string>
+    <string name="lblEndTime">~</string>
+    <string name="lblTrace">Trace</string>
+    <string name="lblDebug">Log</string>
+    <string name="SQLErr">SQL Error</string>
+    <string name="SQLOK">Saved</string>
+    <string name="action_add">Add</string>
+    <string name="lblListMax">View count</string>
+    <string name="sumListMax">Input number of list</string>
+    <string name="lbl05">5</string>
+    <string name="lbl10">10</string>
+    <string name="lbl15">15</string>
+    <string name="btnDelete">Delete</string>
+    <string name="strnone">no</string>
+    <string name="strnone2">no Strings</string>
+    <string name="ReqEvent">Require Event Text</string>
+    <string name="lblDone">Done</string>
+    <string name="lblNotify">Require Notify</string>
+    <string name="ReqDate">Choose Date</string>
+    <string name="btnOK">OK</string>
+    <string name="btnCancel">Cancel</string>
+    <string name="ReqTime">Choose Time</string>
+    <string name="lblInterval">Check Interval</string>
+    <string name="lblBefore">Before(min)</string>
+    <string name="lbl20">20</string>
+    <string name="lbl30">30</string>
+    <string name="strCamera">Camera</string>
+    <string name="lblAttach">Attach</string>
+    <string name="strMenuPicture">New Picture</string>
+    <string name="strMenuGallery">Select Picture</string>
+    <string name="strMenuRemove">Remove</string>
+    <string name="hintAttach">Long Tap　Pls</string>
+    
+
+</resources>
