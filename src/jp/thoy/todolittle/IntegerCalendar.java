@@ -7,4 +7,6 @@ public class IntegerCalendar {
 	int hour;
 	int min;
 	int sec;
+	int ehour;
+	int emin;
 }

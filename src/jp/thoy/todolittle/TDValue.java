@@ -10,13 +10,17 @@ public class TDValue {
 	public final static String KEY_PAGE = "PAGE";
 	public final static int REQ_CODE = 101;
 	
-	public final static String KEY_LIMIT = "ListMax";
+	public final static String KEY_LIMIT = "Limit";
 	public final static String KEY_BEFORE = "Before";
 	public final static String KEY_STOP = "Stop";
-	public final static String ACTION = "Notify";
 	public final static int DEF_DEFORE = 20;
 	public final static int DEF_LIMIT = 15;
-	public final static int MAX = 3;
+
+	public final static String NOTIFY = "ToDoLittle.Notify";
+	public final static int NOTIFY_NUM = 3;
+	public final static int SHORT = -1;
+	public final static int WR_NUM = 3;
+	public final static int WC_NUM = 3;
 
 	public final static int CAPTURE_IMAGE = 100;
 	public final static int SELECT_IMAGE = 200;

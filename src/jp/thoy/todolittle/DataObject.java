@@ -14,7 +14,7 @@ import android.util.Log;
 public class DataObject {
 
 	private final String CNAME = CommTools.getLastPart(this.getClass().getName(),".");
-	private final static boolean isDebug = true;
+	private final static boolean isDebug = false;
 	
 	Context mContext;
 	
@@ -122,97 +122,7 @@ public class DataObject {
 	}
 	
 
-	public List<DoList> getNotify(int distance,int limit,int notify){
-		
-		List<DoList> rList = new ArrayList<DoList>();
-		Cursor cursor = null;
-		SQLiteDatabase db = null;
-		String sql;
-		Calendar nCalendar = Calendar.getInstance();
-		if(distance != 0){
-			nCalendar.add(Calendar.MINUTE, distance);
-		} else {
-			nCalendar.add(Calendar.MONTH, 1);
-		}
-		String from = "";
-		String to = "";
-		
-		if(distance < 0) {
-			from = CommTools.CalendarToString(nCalendar, CommTools.DATETIMELONG);
-			to = CommTools.CalendarToString(Calendar.getInstance(),CommTools.DATETIMELONG);
-		} else if (distance >= 0){
-			to = CommTools.CalendarToString(nCalendar,CommTools.DATETIMELONG);
-			from = CommTools.CalendarToString(Calendar.getInstance(),CommTools.DATETIMELONG);
-		}
-		sql = makeBaseSQL(TDValue.DB_SELECT,TDValue.TableName);
-		sql += " WHERE DATETIME BETWEEN '";
-		sql += from;
-		sql += "' and '";
-		sql += to; 
-		sql += "' ";
-		if(notify != 0){
-			sql += " AND NOTIFY = 1 ";
-		}
-		sql += " AND DONE = 0 ";
-		sql += " ORDER BY DATETIME ";
-		if(limit != 0){
-			sql += " LIMIT " + String.valueOf(limit);
-		}
-		try{
-			db = dbOpen();
-			cursor = dbQuery(db,sql);
-			dbClose(db);
-		} catch (Exception ex) {
-			if(db != null){
-				dbClose(db);
-			}
-			TraceLog traceLog = new TraceLog(mContext);
-			String mname = ":" + Thread.currentThread().getStackTrace()[2].getMethodName();
-			try {
-				traceLog.saveLog(ex,CommTools.getLastPart(CNAME,".") + mname);
-			} catch (IOException e) {
-				ex.printStackTrace();
-			}
-			return null;
-		}
-		
-		if(cursor == null) return null;
-		if(cursor.getCount() == 0) return null;
-
-		for(int i = 0;i < cursor.getCount();i++){
-			rList.add(makeDoList(cursor));
-			cursor.moveToNext();
-		}
-		if(isDebug){
-			Log.w(CNAME,sql);
-		}
-		
-		return rList;
-		
-	}
-
-	public DoList makeDoList(Cursor cursor){
-		//public final static String[] todoColumn = {"ID","EVENT","DATE","TIME","ETIME","DONE",
-		//	"PRIORITY","FILE","ALERT","MEMO","NOTIFY","DATETIME"};
-		
-		DoList list = new DoList();
-		list.id = cursor.getInt(0);
-		list.event = cursor.getString(1);
-		list.date = cursor.getString(2);
-		list.time = cursor.getString(3);
-		list.etime = cursor.getString(4);
-		list.done = cursor.getInt(5);
-		list.priority = cursor.getInt(6);
-		list.file = cursor.getString(7);
-		list.alert = cursor.getInt(8);
-		list.memo = cursor.getString(9);
-		list.notify = cursor.getInt(10);
-		list.datetime = cursor.getString(11);
-		
-		return list;
-	}
-	
-	public List<DoList> reQuery(int page,String limit,int id){
+	public List<DoList> reQuery(int page,int limit,int notify,int id){
 		List<DoList>rList = new ArrayList<DoList>();
 		Cursor cursor = null;
 		SQLiteDatabase db = dbOpen();
@@ -225,13 +135,16 @@ public class DataObject {
 					sql += " WHERE DATETIME >= '";
 					sql += CommTools.CalendarToString(Calendar.getInstance(),CommTools.DATETIMELONG) + "'";
 					sql += " AND DONE = 0";
-					sql += " ORDER BY DATETIME LIMIT " + limit;
+					if(notify != 0){
+						sql += " AND NOTIFY = 1";
+					}
+					sql += " ORDER BY DATETIME LIMIT " + String.valueOf(limit);
 					break;
 				case TDValue.PAST:
 					sql += " WHERE (DATETIME <= '";
 					sql += CommTools.CalendarToString(Calendar.getInstance(),CommTools.DATETIMELONG) + "'" ;
 					sql += ") OR DONE = 1";
-					sql += " ORDER BY DATETIME DESC LIMIT " + limit;
+					sql += " ORDER BY DATETIME DESC LIMIT " + String.valueOf(limit);
 					break;
 			}
 		}
@@ -335,4 +248,25 @@ public class DataObject {
 		if(isDebug) Log.w(CNAME,sql);
 		return ret;
 	}	
+	public DoList makeDoList(Cursor cursor){
+		//public final static String[] todoColumn = {"ID","EVENT","DATE","TIME","ETIME","DONE",
+		//	"PRIORITY","FILE","ALERT","MEMO","NOTIFY","DATETIME"};
+		
+		DoList list = new DoList();
+		list.id = cursor.getInt(0);
+		list.event = cursor.getString(1);
+		list.date = cursor.getString(2);
+		list.time = cursor.getString(3);
+		list.etime = cursor.getString(4);
+		list.done = cursor.getInt(5);
+		list.priority = cursor.getInt(6);
+		list.file = cursor.getString(7);
+		list.alert = cursor.getInt(8);
+		list.memo = cursor.getString(9);
+		list.notify = cursor.getInt(10);
+		list.datetime = cursor.getString(11);
+		
+		return list;
+	}
+	
 }

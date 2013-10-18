@@ -33,6 +33,7 @@ public class MainActivity extends FragmentActivity {
 
 		TDShared tShared = new TDShared(context);
 		int before = tShared.getBefore();
+		
 		RegistService rService = new RegistService(context);
 		rService.register(before);
 		RegistReceiver.regist(context);
@@ -54,7 +55,7 @@ public class MainActivity extends FragmentActivity {
 		pagerAdapter = new PagerAdapter(context,getSupportFragmentManager());
 		TDShared tShared = new TDShared(context);
 
-		String limit = String.valueOf(tShared.getLimit());
+		int limit = tShared.getLimit();
 
 		pagerAdapter.setLimit(limit);
 		viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -110,14 +111,14 @@ public class MainActivity extends FragmentActivity {
 
 			Context context = this.getApplicationContext();
 			TDShared tShared = new TDShared(context);
-			String limit = String.valueOf(tShared.getLimit());
+			int limit = tShared.getLimit();
 			
 			DataObject dObject = new DataObject(this);
 			ListView recentView = (ListView)findViewById(R.id.listRecent);
 			ListView pastView = (ListView)findViewById(R.id.listPast);
 
 			List<DoList>list = null;
-			list = dObject.reQuery(TDValue.RECENT,limit,0);
+			list = dObject.reQuery(TDValue.RECENT,limit,0,0);
 			ListAdapter adapter;
 			if(isDebug) Log.w(CNAME,"Result OK 1");
 			if(list != null){
@@ -132,7 +133,7 @@ public class MainActivity extends FragmentActivity {
 				recentView.setAdapter(adapter);
 			}
 			
-			list = dObject.reQuery(TDValue.PAST,limit,0);
+			list = dObject.reQuery(TDValue.PAST,limit,0,0);
 			if(list != null){
 				adapter = new ListAdapter(this.getApplicationContext(),list);
 				pastView.setAdapter(adapter);

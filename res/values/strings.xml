@@ -44,6 +44,7 @@
     <string name="strMenuGallery">Select Picture</string>
     <string name="strMenuRemove">Remove</string>
     <string name="hintAttach">Long Tap　Pls</string>
+    <string name="strNotify">To Do Notice</string>
     
 
 </resources>

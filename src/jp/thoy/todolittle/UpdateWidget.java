@@ -19,31 +19,25 @@ import android.widget.RemoteViews;
 public class UpdateWidget extends Service {
 
 	private final String CNAME = CommTools.getLastPart(this.getClass().getName(),".");
-	private final static boolean isDebug = true;
-	public final static String ACTION = "EDIT";
-	final static int WR_NUM = 3;
-	final static int WC_NUM = 3;
-	
+	private final static boolean isDebug = false;
+
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO 自動生成されたメソッド・スタブ
-		if(isDebug) Log.w(CNAME,"onStart");
 		Thread.setDefaultUncaughtExceptionHandler(new TraceLog(getApplicationContext()));
 		widgetUpdate();
-		if(isDebug) Log.w(CNAME,"onStart");
 		return super.onStartCommand(intent, flags, startId);
 	}
 
 	public void widgetUpdate(){
 		
-		Thread.setDefaultUncaughtExceptionHandler(new TraceLog(getApplicationContext()));
 		Context context = getApplicationContext();
         ComponentName mComponent = new ComponentName(context, EventWidget.class);
     	AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 
 		RemoteViews mRemoteViews = new RemoteViews(context.getPackageName(),R.layout.eventwidget);
 		
-		int[][] ids= new int[WR_NUM][WC_NUM];
+		int[][] ids= new int[TDValue.WR_NUM][TDValue.WC_NUM];
 		if(isDebug) Log.w(CNAME,"update 1");
 		ids[0][0] = R.id.textEvent1;
 		ids[0][1] = R.id.textDate1;
@@ -55,10 +49,10 @@ public class UpdateWidget extends Service {
 		ids[2][1] = R.id.textDate3;
 		ids[2][2] = R.id.textTime3;
 		
-		DataObject mDataObject = new DataObject(context);
+		DataObject dObject = new DataObject(context);
 		List<DoList> rList = new ArrayList<DoList>();
 		try{
-			rList = mDataObject.reQuery(0,"3",0);
+			rList = dObject.reQuery(TDValue.RECENT,3,0,0);
 		} catch (Exception ex) {
 			TraceLog traceLog = new TraceLog(context);
 			String mname = ":" + Thread.currentThread().getStackTrace()[2].getMethodName();
@@ -76,16 +70,16 @@ public class UpdateWidget extends Service {
 				mRemoteViews.setTextViewText(ids[i][1], rList.get(i).date.toString().substring(5));
 				mRemoteViews.setTextViewText(ids[i][2], rList.get(i).time);
 			}
-			for(int i = rList.size();i < WR_NUM;i++){
-				for(int j = 0;j < WC_NUM;j++){
+			for(int i = rList.size();i < TDValue.WR_NUM;i++){
+				for(int j = 0;j < TDValue.WC_NUM;j++){
 					mRemoteViews.setTextViewText(ids[i][j], "");
 				}
 			}
 			if(isDebug) Log.w(CNAME,"cnt=" + rList.size());
 		} else {
 			if(isDebug) Log.w(CNAME,"update 2.2");
-			for(int j = 0;j < WC_NUM;j++){
-				//mRemoteViews.setTextViewText(ids[0][j], context.getString(R.string.strnone));
+			for(int j = 0;j < TDValue.WC_NUM;j++){
+				mRemoteViews.setTextViewText(ids[0][j], context.getString(R.string.strnone));
 			}
 			
 		}

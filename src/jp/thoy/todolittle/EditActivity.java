@@ -41,7 +41,7 @@ import android.widget.Toast;
 public class EditActivity extends Activity implements OnClickListener {
 
 	private final String CNAME = CommTools.getLastPart(this.getClass().getName(),".");
-	private final static boolean isDebug = true;
+	private final static boolean isDebug = false;
 
 	
 	private IntegerCalendar intCalendar;
@@ -62,8 +62,6 @@ public class EditActivity extends Activity implements OnClickListener {
 		Intent intent = getIntent();
 		
 		int ids = intent.getIntExtra(TDValue.KEY_ID,0);
-
-		if(isDebug) Log.w(CNAME,"ids=" + ids);
 		
 		TextView lblID = (TextView)findViewById(R.id.lblID);
 		EditText editEvent = (EditText)findViewById(R.id.editEvent);
@@ -80,12 +78,11 @@ public class EditActivity extends Activity implements OnClickListener {
 
 		registerForContextMenu(editAttach);
 		
-		if(isDebug) Log.w(CNAME,"OnCreate2");
 		List<DoList> aList = new ArrayList<DoList>(); 
 		dObject = new DataObject(getApplicationContext());
 		if(ids != 0){
 			lblID.setText(String.valueOf(ids));
-			aList = dObject.reQuery(0,"",ids);
+			aList = dObject.reQuery(0,0,0,ids);
 			editEvent.setText(aList.get(0).event);
 			editDate.setText(aList.get(0).date);
 			editTime.setText(aList.get(0).time);
@@ -101,16 +98,18 @@ public class EditActivity extends Activity implements OnClickListener {
 			} else {
 				done.setChecked(false);
 			}
-			if(isDebug) Log.w(CNAME,"OnCreate4 + datetime=" + aList.get(0).datetime);
 			editAttach.setText(aList.get(0).file);
-			intCalendar.year = CommTools.DateStr2Int(aList.get(0).datetime + ":00", Calendar.YEAR);
-			intCalendar.month = CommTools.DateStr2Int(aList.get(0).datetime + ":00", Calendar.MONTH) - 1;
-		    intCalendar.day =  CommTools.DateStr2Int(aList.get(0).datetime + ":00", Calendar.DAY_OF_MONTH);
-		    intCalendar.hour =  CommTools.DateStr2Int(aList.get(0).datetime + ":00", Calendar.HOUR_OF_DAY);
-		    intCalendar.min =  CommTools.DateStr2Int(aList.get(0).datetime + ":00", Calendar.MINUTE);
-			if(isDebug) Log.w(CNAME,"OnCreate5");
+			intCalendar.year = CommTools.DateStr2Int(aList.get(0).date,Calendar.YEAR);
+			intCalendar.month = CommTools.DateStr2Int(aList.get(0).date, Calendar.MONTH) - 1;
+		    intCalendar.day =  CommTools.DateStr2Int(aList.get(0).date , Calendar.DAY_OF_MONTH);
+		    intCalendar.hour =  CommTools.DateStr2Int(aList.get(0).time, Calendar.HOUR_OF_DAY);
+		    intCalendar.min =  CommTools.DateStr2Int(aList.get(0).time, Calendar.MINUTE);
+		    intCalendar.ehour =  CommTools.DateStr2Int(aList.get(0).etime, Calendar.HOUR_OF_DAY);
+		    intCalendar.emin =  CommTools.DateStr2Int(aList.get(0).etime, Calendar.MINUTE);
+			if(isDebug) Log.w(CNAME,"date=" + intCalendar.year + "/" + intCalendar.month + "/" + intCalendar.day);
+			if(isDebug) Log.w(CNAME,"hour=" + intCalendar.hour + ":" + intCalendar.min
+										+ " ehour=" + intCalendar.ehour + ":" + intCalendar.emin);
 		} else {
-			if(isDebug) Log.w(CNAME,"OnCreate6");
 			Calendar calendar = Calendar.getInstance();
 			calendar.add(Calendar.HOUR_OF_DAY, 1);
 			calendar.add(Calendar.MINUTE, (-1) * calendar.get(Calendar.MINUTE));
@@ -125,11 +124,12 @@ public class EditActivity extends Activity implements OnClickListener {
 			editDate.setText(CommTools.CalendarToString(calendar, CommTools.DATE));
 			editTime.setText(CommTools.CalendarToString(calendar, CommTools.TIMESHORT));
 			calendar.add(Calendar.HOUR_OF_DAY,1);
+			intCalendar.ehour =  calendar.get(Calendar.HOUR_OF_DAY);
+			intCalendar.emin =  calendar.get(Calendar.MINUTE);
 			editEndTime.setText(CommTools.CalendarToString(calendar, CommTools.TIMESHORT));
 			notify.setChecked(false);
 			btnDelete.setEnabled(false);
 		}
-		if(isDebug) Log.w(CNAME,"OnCreate9");
 
 		editAttach.setOnClickListener(this);
 		editDate.setOnClickListener(this);
@@ -138,7 +138,6 @@ public class EditActivity extends Activity implements OnClickListener {
 		btnSave.setOnClickListener(this);
 		btnDelete.setOnClickListener(this);
 			
-		if(isDebug) Log.w(CNAME,"OnCreate10");
 	}
 	
 	@Override
@@ -251,8 +250,13 @@ public class EditActivity extends Activity implements OnClickListener {
 	public void cmdTimeDialog(int which){
 		if(which == -1){
 			EditText editTime = (EditText)findViewById(timeIds);
-			editTime.setText(CommTools.intDate2String(
-					0, 0, 0, intCalendar.hour, intCalendar.min, 0, CommTools.TIMESHORT));
+			if(timeIds == R.id.editTime){
+				editTime.setText(CommTools.intDate2String(
+						0, 0, 0, intCalendar.hour, intCalendar.min, 0, CommTools.TIMESHORT));
+			} else {
+				editTime.setText(CommTools.intDate2String(
+						0, 0, 0, intCalendar.ehour, intCalendar.emin, 0, CommTools.TIMESHORT));
+			}
 	
 		} else {
 			storeCalendar(preCalendar,intCalendar);
@@ -278,8 +282,13 @@ public class EditActivity extends Activity implements OnClickListener {
 		
 		Bundle args = new Bundle();
 		storeCalendar(intCalendar,preCalendar);
-		args.putInt("HOUR", intCalendar.hour);
-		args.putInt("MIN", intCalendar.min);
+		if(timeIds == R.id.editTime){
+			args.putInt("HOUR", intCalendar.hour);
+			args.putInt("MIN", intCalendar.min);
+		} else {
+			args.putInt("HOUR", intCalendar.ehour);
+			args.putInt("MIN", intCalendar.emin);
+		}
 		timeDialog.setCallBack(TimeChangeHandler);
 		timeDialog.setArguments(args);
 		timeDialog.show(manager, "Time");
@@ -302,8 +311,13 @@ public class EditActivity extends Activity implements OnClickListener {
 		@Override
 		public void onTimeChanged(TimePicker picker, int hour, int minute) {
 			// TODO 自動生成されたメソッド・スタブ
-			intCalendar.hour = hour;
-			intCalendar.min = minute;
+			if(timeIds == R.id.editTime){
+				intCalendar.hour = hour;
+				intCalendar.min = minute;
+			} else {
+				intCalendar.ehour = hour;
+				intCalendar.emin = minute;
+			}
 		}
 
 	};
@@ -456,5 +470,7 @@ public class EditActivity extends Activity implements OnClickListener {
 		to.day = from.day;
 		to.hour = from.hour;
 		to.min = from.min;
+		to.ehour = from.ehour;
+		to.emin = from.emin;
 	}
 }

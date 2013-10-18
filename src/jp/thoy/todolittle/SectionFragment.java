@@ -21,7 +21,7 @@ import android.widget.TextView;
 public class SectionFragment extends Fragment {
 
 	private final String CNAME = CommTools.getLastPart(this.getClass().getName(),".");
-	private final static boolean isDebug = false;
+	private final static boolean isDebug = true;
 	int[] layouts;
 	int[] ids;
 	
@@ -49,24 +49,21 @@ public class SectionFragment extends Fragment {
 
 		Thread.setDefaultUncaughtExceptionHandler(new TraceLog(container.getContext()));
 
-		if(isDebug) Log.w(CNAME,"OnCreateView1");
 		int page = getArguments().getInt(TDValue.KEY_PAGE);
-		String limit = getArguments().getString(TDValue.KEY_LIMIT);
+		int limit = getArguments().getInt(TDValue.KEY_LIMIT);
 		
 		View rootView = null;
 		DataObject dObject;
 		ListView listView = null; 
-		if(isDebug) Log.w(CNAME,"OnCreateView2");
 
 		rootView = inflater.inflate(this.layouts[page], container,false);
 		listView = (ListView)rootView.findViewById(ids[page]);
 		List<DoList> dList = null;
 		Context context = rootView.getContext();
-		if(isDebug) Log.w(CNAME,"OnCreateView3");
 		
 		try{
 			dObject = new DataObject(context);
-			dList = dObject.reQuery(page,limit,0);
+			dList = dObject.reQuery(page,limit,0,0);
 		} catch (Exception ex) {
 			TraceLog saveTrace = new TraceLog(context);
 			String mname = ":" + Thread.currentThread().getStackTrace()[2].getMethodName();
@@ -76,7 +73,6 @@ public class SectionFragment extends Fragment {
 				ex.printStackTrace();
 			}
 		}
-		if(isDebug) Log.w(CNAME,"OnCreateView5");
 		if(dList != null && dList.size() > 0){
 			ListAdapter adapter = new ListAdapter(context,dList);
 			listView.setAdapter(adapter);
@@ -90,6 +86,7 @@ public class SectionFragment extends Fragment {
 					Intent mIntent = new Intent(view.getContext(),EditActivity.class);
 					mIntent.putExtra(TDValue.KEY_ID,Integer.parseInt(tView.getText().toString()));
 					startActivityForResult(mIntent,TDValue.REQ_CODE);
+					if(isDebug) Log.w(CNAME,"OnClick");
 				}
 			});
 		} else {
@@ -98,7 +95,6 @@ public class SectionFragment extends Fragment {
 			ListAdapter adapter = new ListAdapter(context,dList);
 			listView.setAdapter(adapter);
 		}
-		if(isDebug) Log.w(CNAME,"OnCreateView10");
 		return rootView;
 	}
 

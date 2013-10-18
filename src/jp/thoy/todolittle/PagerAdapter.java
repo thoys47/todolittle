@@ -13,7 +13,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
 	private final String CNAME = CommTools.getLastPart(this.getClass().getName(),".");
 	private final static boolean isDebug = false;
 	private Context mContext;
-	private String mLimit;
+	private int mLimit;
 	
 	public PagerAdapter(Context context,FragmentManager fm) {
 		super(fm);
@@ -21,7 +21,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
 		mContext = context;
 	}
 
-	public void setLimit(String limit){
+	public void setLimit(int limit){
 		mLimit = limit;
 	}
 	
@@ -34,7 +34,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
 		if(isDebug) Log.w(CNAME,"getItem1");
 		Bundle args = new Bundle();
 		args.putInt(TDValue.KEY_PAGE, item);
-		args.putString(TDValue.KEY_LIMIT, mLimit);
+		args.putInt(TDValue.KEY_LIMIT, mLimit);
 		fragment.setArguments(args);
 		if(isDebug) Log.w(CNAME,"getItem2");
 		return fragment;

@@ -29,22 +29,21 @@ public class EventNotify extends BroadcastReceiver {
 		// TODO 自動生成されたメソッド・スタブ
 		Thread.setDefaultUncaughtExceptionHandler(new TraceLog(context));
 
-		RegistService rService = new RegistService(context);
-		List<DoList> nList = new ArrayList<DoList>();
-		DataObject mDataObject = new DataObject(context);
-		PendingIntent pIntent;
-		Calendar calendar = Calendar.getInstance();
-		TDShared tShared = new TDShared(context);
-		String check = CommTools.replaceSymbol(CommTools.CalendarToString(Calendar.getInstance(),CommTools.DATETIMESHORT) + "00");
-		SharedPreferences mPrefer = context.getSharedPreferences(TDValue.PREFILENAME,Activity.MODE_PRIVATE);
-		int before = tShared.getBefore();
 		if(isDebug) Log.w(CNAME,"onReceive1");
-		if(intent.getAction().equals(TDValue.ACTION)){
-			String stop = mPrefer.getString(TDValue.KEY_STOP, "");
+		if(intent.getAction().equals(TDValue.NOTIFY)){
+			RegistService rService = new RegistService(context);
+			List<DoList> dList = new ArrayList<DoList>();
+			List<DoList> nList = new ArrayList<DoList>();
+			DataObject dObject = new DataObject(context);
+			PendingIntent pIntent;
+			Calendar calendar = Calendar.getInstance();
+			TDShared tShared = new TDShared(context);
+			int before = tShared.getBefore();
+			int limit = tShared.getLimit();
 			
 			try {
-				mDataObject = new DataObject(context);
-				nList = mDataObject.getNotify(before + 10,TDValue.MAX,1);
+				dObject = new DataObject(context);
+				dList = dObject.reQuery(TDValue.RECENT,limit,0,0);
 			} catch (SQLException ex){
 				TraceLog saveTrace = new TraceLog(context);
 				try {
@@ -54,70 +53,59 @@ public class EventNotify extends BroadcastReceiver {
 				}
 			}
 			
-			if(nList != null){
-				calendar.setTimeInMillis(CommTools.strToMillis(nList.get(0).datetime + ":00") - before * 60 * 1000);
-				String timing = CommTools.replaceSymbol(CommTools.CalendarToString(calendar,CommTools.DATETIMESHORT)) + "00";
-				//まだ通知時刻前ならreturn
-				if(Long.parseLong(timing) > Long.parseLong(check)){
-					return;
-				}
-				
-				nList = mDataObject.getNotify(before,TDValue.MAX,1);
-				
-				if(nList == null){
-					rService.stop(context);
-					return;
-				}
-				
-				NotificationManager nManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-				for(int i = 0;i < nList.size();i++){
-					try{
-						Notification.Builder builder = new Notification.Builder(context);
-						Intent cIntent = new Intent(context,MainActivity.class);
-						pIntent = PendingIntent.getActivity(context, 0, cIntent, 0);
-						Notification notify = builder
-							.setContentTitle(nList.get(i).event)
-							.setContentText(nList.get(i).datetime)
-							.setSmallIcon(R.drawable.ic_notify)
-							.setTicker("ToDoLittle Alert")
-							.setContentIntent(pIntent)
-							.setAutoCancel(true)
-							.setDefaults(Notification.DEFAULT_ALL)
-							.getNotification();
-						nManager.notify(i, notify);
-						String sql = "update " +  TDValue.TableName + " set notify = 0 where id = " + nList.get(i).id;
-						if(isDebug){
-							Log.w(CNAME,sql);
-						}
-						mDataObject.execSQL(sql);
-					} catch (Exception ex) {
-						TraceLog saveTrace = new TraceLog(context);
-						String mname = ":" + Thread.currentThread().getStackTrace()[2].getMethodName();
-						try {
-							saveTrace.saveLog(ex,CommTools.getLastPart(CNAME, ".") + mname);
-						} catch (IOException e) {
-							ex.printStackTrace();
+			if(dList != null){
+				nList = dObject.reQuery(TDValue.RECENT,TDValue.NOTIFY_NUM,1,0);
+				if(nList != null){
+					NotificationManager nManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+					for(int i = 0;i < nList.size();i++){
+						try{
+							Long nMillis = CommTools.strToMillis(nList.get(i).datetime + ":10") - ((before + 1) * 60 * 1000);
+							if(calendar.getTimeInMillis() >= nMillis){
+						
+								Notification.Builder builder = new Notification.Builder(context);
+								Intent cIntent = new Intent(context,MainActivity.class);
+								pIntent = PendingIntent.getActivity(context, 0, cIntent, 0);
+								Notification notify = builder
+									.setContentTitle(nList.get(i).event)
+									.setContentText(nList.get(i).datetime)
+									.setSmallIcon(R.drawable.ic_notify)
+									.setTicker(context.getResources().getString(R.string.strNotify))
+									.setContentIntent(pIntent)
+									.setAutoCancel(true)
+									.setDefaults(Notification.DEFAULT_ALL)
+									.getNotification();
+								nManager.notify(i, notify);
+								String sql = "update " +  TDValue.TableName + " set notify = 0 where id = " + nList.get(i).id;
+								if(isDebug){
+									Log.w(CNAME,sql);
+								}
+								dObject.execSQL(sql);
+							}
+						} catch (Exception ex) {
+							TraceLog saveTrace = new TraceLog(context);
+							String mname = ":" + Thread.currentThread().getStackTrace()[2].getMethodName();
+							try {
+								saveTrace.saveLog(ex,CommTools.getLastPart(CNAME, ".") + mname);
+							} catch (IOException e) {
+								ex.printStackTrace();
+							}
 						}
 					}
+				} else {
+					//no data notify but is data recent
+					Long nMillis = CommTools.strToMillis(dList.get(0).datetime + ":00");
+					if(nMillis - calendar.getTimeInMillis() > ((before + 10) * 1000 * 60)){
+						rService.stop(context);
+						rService.register(before);
+					}
 				}
-			}//通知するものがすでにない場合の終わり
-			if(Long.parseLong(stop) < Long.parseLong(check)){
-				Intent sIntent = new Intent(context,UpdateWidget.class);
-				context.startService(sIntent);
-		    	rService.register(before);
+			} else {
+				//no data recent
+				rService.stop(context);
 			}
-			
-		} else {
-			TraceLog saveLog = new TraceLog(context);
-			try {
-				saveLog.saveDebug(CommTools.getLastPart(CNAME, ".") + ":" + CommTools.getLastPart(intent.getAction(),"."));
-			} catch (IOException e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
-			}
-			rService.stop(context);
-	    	rService.register(before);
 		}
+		Intent sIntent = new Intent(context,UpdateWidget.class);
+		context.startService(sIntent);
 		if(isDebug) Log.w(CNAME,"onReceive10");
 	}
 

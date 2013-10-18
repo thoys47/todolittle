@@ -17,7 +17,7 @@ public class LongTermService extends Service {
 		// TODO 自動生成されたメソッド・スタブ
 		RegistService rService = new RegistService(getApplicationContext());
 		rService.stop(getApplicationContext());
-		rService.register(RegistService.SHORT);
+		rService.register(TDValue.SHORT);
 		
 		return super.onStartCommand(intent, flags, startId);
 	}
