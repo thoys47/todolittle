@@ -18,7 +18,7 @@ public class DateDialog extends DialogFragment {
 	OnDateChangedListener mListener;
 	
 	private final String CNAME = CommTools.getLastPart(this.getClass().getName(),".");
-	private final static boolean isDebug = true;
+	private final static boolean isDebug = false;
 
 	int iYear;
 	int iMonth;

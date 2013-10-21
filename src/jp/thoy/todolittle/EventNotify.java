@@ -21,7 +21,7 @@ import android.util.Log;
 public class EventNotify extends BroadcastReceiver {
 
 	private final String CNAME = CommTools.getLastPart(this.getClass().getName(),".");
-	private final static boolean isDebug = true;
+	private final static boolean isDebug = false;
 
 	@SuppressWarnings("deprecation")
 	@Override

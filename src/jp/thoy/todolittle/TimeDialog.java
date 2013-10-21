@@ -18,7 +18,7 @@ public class TimeDialog extends DialogFragment {
 	OnTimeChangedListener mListener;
 	
 	private final String CNAME = CommTools.getLastPart(this.getClass().getName(),".");
-	private final static boolean isDebug = true;
+	private final static boolean isDebug = false;
 	int iHour;
 	int iMin;
 	

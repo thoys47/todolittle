@@ -13,6 +13,7 @@
     <string name="lblEvent">イベント</string>
     <string name="lblDate">日付</string>
     <string name="lblTime">時間</string>
+    <string name="lblEndTime">～</string>
     <string name="lblTrace">Trace</string>
     <string name="lblDebug">Log</string>
     <string name="SQLErr">SQL Error</string>
@@ -42,6 +43,7 @@
     <string name="strMenuPicture">新しい画像</string>
     <string name="strMenuGallery">画像の選択</string>
     <string name="strMenuRemove">画像の削除</string>
+    <string name="strNotify">To Do 通知</string>
     <string name="hintAttach">長押ししてください。</string>
 
 </resources>

@@ -20,7 +20,7 @@ import android.widget.ListView;
 
 public class MainActivity extends FragmentActivity {
 	private final String CNAME = CommTools.getLastPart(this.getClass().getName(),".");
-	private final static boolean isDebug = true;
+	private final static boolean isDebug = false;
 	
 	
 	@Override
@@ -117,30 +117,28 @@ public class MainActivity extends FragmentActivity {
 			ListView recentView = (ListView)findViewById(R.id.listRecent);
 			ListView pastView = (ListView)findViewById(R.id.listPast);
 
-			List<DoList>list = null;
-			list = dObject.reQuery(TDValue.RECENT,limit,0,0);
+			List<DoList>rlist = null;
+			rlist = dObject.reQuery(TDValue.RECENT,limit,0,0);
 			ListAdapter adapter;
-			if(isDebug) Log.w(CNAME,"Result OK 1");
-			if(list != null){
-				if(isDebug) Log.w(CNAME,"Result OK 2");
-				adapter = new ListAdapter(this.getApplicationContext(),list);
+			if(rlist != null){
+				adapter = new ListAdapter(this.getApplicationContext(),rlist);
 				recentView.setAdapter(adapter);
 			} else {
-				if(isDebug) Log.w(CNAME,"Result OK 3");
-				list = new ArrayList<DoList>();
-				list.add(InitDoList.initList(context));
-				adapter = new ListAdapter(this.getApplicationContext(),list);
+				rlist = new ArrayList<DoList>();
+				rlist.add(InitDoList.initList(context));
+				adapter = new ListAdapter(this.getApplicationContext(),rlist);
 				recentView.setAdapter(adapter);
 			}
 			
-			list = dObject.reQuery(TDValue.PAST,limit,0,0);
-			if(list != null){
-				adapter = new ListAdapter(this.getApplicationContext(),list);
+			List<DoList>plist = null;
+			plist = dObject.reQuery(TDValue.PAST,limit,0,0);
+			if(plist != null){
+				adapter = new ListAdapter(this.getApplicationContext(),plist);
 				pastView.setAdapter(adapter);
 			} else {
-				list = new ArrayList<DoList>();
-				list.add(InitDoList.initList(context));
-				adapter = new ListAdapter(this.getApplicationContext(),list);
+				plist = new ArrayList<DoList>();
+				plist.add(InitDoList.initList(context));
+				adapter = new ListAdapter(this.getApplicationContext(),plist);
 				pastView.setAdapter(adapter);
 			}
 			Intent sIntent = new Intent(context,UpdateWidget.class);

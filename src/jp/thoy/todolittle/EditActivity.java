@@ -12,7 +12,6 @@ import java.util.List;
 import jp.thoy.todolittle.R;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -52,6 +51,7 @@ public class EditActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自動生成されたメソッド・スタブ
 		super.onCreate(savedInstanceState);
+		if(isDebug) Log.w(CNAME,"OnCreate");
 		setContentView(R.layout.edit_main);
 		//DatePickerDialog mDateDialog;
 		DataObject dObject;
@@ -62,7 +62,7 @@ public class EditActivity extends Activity implements OnClickListener {
 		Intent intent = getIntent();
 		
 		int ids = intent.getIntExtra(TDValue.KEY_ID,0);
-		
+		if(isDebug) Log.w(CNAME,"id=" + ids);
 		TextView lblID = (TextView)findViewById(R.id.lblID);
 		EditText editEvent = (EditText)findViewById(R.id.editEvent);
 		EditText editDate = (EditText)findViewById(R.id.editDate);
@@ -373,19 +373,15 @@ public class EditActivity extends Activity implements OnClickListener {
 				}
 			case R.id.btnSave:
 				List<DoList> dList = new ArrayList<DoList>();
-				if(isDebug) Log.w(CNAME,"btnSave1");
 				try{
 					if(ids == 0) {
-						if(isDebug) Log.w(CNAME,"btnSave2");
 						dList.add(getDatas());
 						if(dList.get(0).event.equals("")){
 							Toast.makeText(context, R.string.ReqEvent, Toast.LENGTH_SHORT).show();
 							return;
 						}
 						dObject.insertList(dList);
-						if(isDebug) Log.w(CNAME,"btnSave4");
 					} else {
-						if(isDebug) Log.w(CNAME,"btnSave6");
 						dList.add(getDatas());
 						if(dList.get(0).event.equals("")){
 							Toast.makeText(context, R.string.ReqEvent, Toast.LENGTH_SHORT).show();
@@ -393,7 +389,6 @@ public class EditActivity extends Activity implements OnClickListener {
 						}
 						dList.get(0).id = ids;
 						dObject.updateList(dList);
-						if(isDebug) Log.w(CNAME,"btnSave8");
 					}
 					ret = RESULT_OK;
 				} catch (Exception ex) {
@@ -454,6 +449,9 @@ public class EditActivity extends Activity implements OnClickListener {
 		rList.time = editTime.getText().toString();
 		rList.etime = editEndTime.getText().toString();
 		rList.file = editAttach.getText().toString();
+		if(rList.time.compareTo(rList.etime) > 0){
+			rList.etime = rList.time;
+		}
 		if(notify.isChecked()){
 			rList.notify = 1;
 		}

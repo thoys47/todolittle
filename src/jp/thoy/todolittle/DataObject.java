@@ -7,7 +7,6 @@ import java.util.List;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -209,7 +208,11 @@ public class DataObject {
 			sql += "'" + dList.get(ret).event + "',";
 			sql += "'" + dList.get(ret).date + "',";
 			sql += "'" + dList.get(ret).time + "',";
-			sql += "'" + dList.get(ret).etime + "',";
+			if(dList.get(ret) != null) {
+				sql += "'" + dList.get(ret).etime + "',";
+			} else {
+				sql += "'" + dList.get(ret).time + "',";
+			}
 			sql += String.valueOf(dList.get(ret).done) + ",";
 			sql += String.valueOf(dList.get(ret).priority) + ",";
 			sql += "'" + dList.get(ret).file + "',";

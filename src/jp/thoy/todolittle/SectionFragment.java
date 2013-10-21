@@ -17,11 +17,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
-public class SectionFragment extends Fragment {
+public class SectionFragment extends Fragment  implements OnItemClickListener {
 
 	private final String CNAME = CommTools.getLastPart(this.getClass().getName(),".");
-	private final static boolean isDebug = true;
+	private final static boolean isDebug = false;
 	int[] layouts;
 	int[] ids;
 	
@@ -76,26 +77,31 @@ public class SectionFragment extends Fragment {
 		if(dList != null && dList.size() > 0){
 			ListAdapter adapter = new ListAdapter(context,dList);
 			listView.setAdapter(adapter);
-			listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-				@Override
-				public void onItemClick(AdapterView<?> parent,
-						View view, int position, long id) {
-					// TODO 自動生成されたメソッド・スタブ
-					TextView tView = (TextView)view.findViewById(R.id.textID);
-					Intent mIntent = new Intent(view.getContext(),EditActivity.class);
-					mIntent.putExtra(TDValue.KEY_ID,Integer.parseInt(tView.getText().toString()));
-					startActivityForResult(mIntent,TDValue.REQ_CODE);
-					if(isDebug) Log.w(CNAME,"OnClick");
-				}
-			});
+			listView.setOnItemClickListener(this);
 		} else {
 			dList = new ArrayList<DoList>();
 			dList.add(InitDoList.initList(context));
 			ListAdapter adapter = new ListAdapter(context,dList);
 			listView.setAdapter(adapter);
+			listView.setOnItemClickListener(this);
 		}
 		return rootView;
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		// TODO 自動生成されたメソッド・スタブ
+		TextView tView = (TextView)view.findViewById(R.id.textID);
+		if(isDebug) Log.w(CNAME,"OnClick text=" + tView.getText().toString());
+		if(!tView.getText().toString().equals("0")) {
+			Intent intent = new Intent(parent.getContext(),EditActivity.class);
+			if(isDebug) Log.w(CNAME,"context" + view.getContext().toString());
+			intent.putExtra(TDValue.KEY_ID,Integer.parseInt(tView.getText().toString()));
+			if(isDebug) Log.w(CNAME,"put=" + Integer.parseInt(tView.getText().toString()));
+			startActivityForResult(intent,TDValue.REQ_CODE);
+		}
+		if(isDebug) Log.w(CNAME,"OnClick");
+
 	}
 
 }

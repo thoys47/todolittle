@@ -16,7 +16,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 public class EventPreference extends Activity implements OnCheckedChangeListener{
 
 	private final String CNAME = CommTools.getLastPart(this.getClass().getName(),".");
-	private final static boolean isDebug = true;
+	private final static boolean isDebug = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
