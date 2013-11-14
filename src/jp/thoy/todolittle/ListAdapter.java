@@ -31,13 +31,11 @@ public class ListAdapter extends ArrayAdapter<DoList>{
 		}
 		DoList item = this.getItem(position);
 		if(item.id != 0){
-			if(isDebug) Log.w(CNAME,"getView2");
 			TextView id = (TextView)convertView.findViewById(R.id.textID);
 			TextView name = (TextView)convertView.findViewById(R.id.textEvent);
 			TextView date = (TextView)convertView.findViewById(R.id.textDate);
 			TextView time = (TextView)convertView.findViewById(R.id.textTime);
 			TextView notify = (TextView)convertView.findViewById(R.id.textNotify);
-			if(isDebug) Log.w(CNAME,"getView5");
 			id.setText(String.valueOf(item.id));
 			name.setText(item.event);
 			date.setText(item.date);
@@ -48,6 +46,15 @@ public class ListAdapter extends ArrayAdapter<DoList>{
 				notify.setText("");
 			}
 			if(isDebug) Log.w(CNAME,"getView9");
+		} else {
+			TextView id = (TextView)convertView.findViewById(R.id.textID);
+			TextView name = (TextView)convertView.findViewById(R.id.textEvent);
+			TextView date = (TextView)convertView.findViewById(R.id.textDate);
+			TextView time = (TextView)convertView.findViewById(R.id.textTime);
+			id.setText(String.valueOf(item.id));
+			name.setText(item.event);
+			date.setText("");
+			time.setText("");
 		}
 		if(isDebug) Log.w(CNAME,"getView10");
 		return convertView;

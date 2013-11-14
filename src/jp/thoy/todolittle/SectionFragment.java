@@ -21,7 +21,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class SectionFragment extends Fragment  implements OnItemClickListener {
 
-	private final String CNAME = CommTools.getLastPart(this.getClass().getName(),".");
+	private final String TAG = CommTools.getLastPart(this.getClass().getName(),".");
 	private final static boolean isDebug = false;
 	int[] layouts;
 	int[] ids;
@@ -30,7 +30,7 @@ public class SectionFragment extends Fragment  implements OnItemClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO 自動生成されたメソッド・スタブ
 		super.onCreate(savedInstanceState);
-		if(isDebug) Log.w(CNAME,"OnCreate1");
+		if(isDebug) Log.w(TAG,"OnCreate1");
 
 		layouts = new int[TDValue.TAB_NUM];
 		ids = new int[TDValue.TAB_NUM];
@@ -40,7 +40,7 @@ public class SectionFragment extends Fragment  implements OnItemClickListener {
 		ids[TDValue.RECENT] = R.id.listRecent;
 		ids[TDValue.PAST] = R.id.listPast;
 
-		if(isDebug) Log.w(CNAME,"OnCreate2");
+		if(isDebug) Log.w(TAG,"OnCreate2");
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class SectionFragment extends Fragment  implements OnItemClickListener {
 			TraceLog saveTrace = new TraceLog(context);
 			String mname = ":" + Thread.currentThread().getStackTrace()[2].getMethodName();
 			try {
-				saveTrace.saveLog(ex,CNAME + mname);
+				saveTrace.saveLog(ex,TAG + mname);
 			} catch (IOException e) {
 				ex.printStackTrace();
 			}
@@ -80,7 +80,12 @@ public class SectionFragment extends Fragment  implements OnItemClickListener {
 			listView.setOnItemClickListener(this);
 		} else {
 			dList = new ArrayList<DoList>();
-			dList.add(InitDoList.initList(context));
+			DoList list = InitDoList.initList(context);
+			list.event = context.getString(R.string.strNoItem);
+			dList.add(list);
+			if(isDebug){
+				Log.w(TAG,"event=" + dList.get(0).event);
+			}
 			ListAdapter adapter = new ListAdapter(context,dList);
 			listView.setAdapter(adapter);
 			listView.setOnItemClickListener(this);
@@ -92,15 +97,15 @@ public class SectionFragment extends Fragment  implements OnItemClickListener {
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		// TODO 自動生成されたメソッド・スタブ
 		TextView tView = (TextView)view.findViewById(R.id.textID);
-		if(isDebug) Log.w(CNAME,"OnClick text=" + tView.getText().toString());
+		if(isDebug) Log.w(TAG,"OnClick text=" + tView.getText().toString());
 		if(!tView.getText().toString().equals("0")) {
 			Intent intent = new Intent(parent.getContext(),EditActivity.class);
-			if(isDebug) Log.w(CNAME,"context" + view.getContext().toString());
+			if(isDebug) Log.w(TAG,"context" + view.getContext().toString());
 			intent.putExtra(TDValue.KEY_ID,Integer.parseInt(tView.getText().toString()));
-			if(isDebug) Log.w(CNAME,"put=" + Integer.parseInt(tView.getText().toString()));
+			if(isDebug) Log.w(TAG,"put=" + Integer.parseInt(tView.getText().toString()));
 			startActivityForResult(intent,TDValue.REQ_CODE);
 		}
-		if(isDebug) Log.w(CNAME,"OnClick");
+		if(isDebug) Log.w(TAG,"OnClick");
 
 	}
 

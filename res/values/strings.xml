@@ -45,6 +45,7 @@
     <string name="strMenuRemove">Remove</string>
     <string name="hintAttach">Long Tap　Pls</string>
     <string name="strNotify">To Do Notice</string>
+    <string name="strNoItem">Tap the plus menu please.</string>
     
 
 </resources>
